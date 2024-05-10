@@ -1,0 +1,62 @@
+Docs link: https://docs.google.com/document/d/1g3nFXRmdaFQ5MKW1Xu9Q0MfphyhQVeh2MCm5OXp3pvE/edit?usp=sharing
+Created by Gene Kim and Renee Qin.
+
+Final product spec front end:
+
+MVP Line/Priorities
+Very nice to have: task flow 7
+Nice to have: Task flow 9 (user can just receive positive feedback and it accumulates rather than being able to fully create/edit journal entries)
+Need to haves: everything else lol.
+
+User task flows:
+Task flow 1: Create/Customize your profile
+Screen 1: Welcome to the app home page. User clicks vsign up with stanford.edu email address (button or link). Next button (not necessary to actually implement sign in yet, GK thinks)
+Screen 2: (Community norms and values page). two main headings/sections: 1. Community norms (active listening, respect, kindness, ask for consent/let people decline questions, etc.). 2. Not a mental health app. Users of this platform are not trained in mental health topics. For your own well-being please refer to campus mental health resources (list bridge peer counseling, caps, etc.) Checkbox with I agree/understand. Next button. 
+Screen 3: Confirm understanding. Written conversation between two people (also option to play audio). user answers two multiple choice questions (e.g. what community norm did speaker 1 follow? What should you do if someone asks for mental health advice?). Next button.
+Screen 4: (if doesn't pass quiz). Almost! Give targeted feedback to reinforce good norms/have explanations. Next button.
+Screen 5: Customize profile. Select topics of interest (drop down with pre-defined list (post-graduation thoughts, first experiences, life philosophy, etc.)). Write an optional bio (text box). Pick a pseudonym first name. Optionally add Myers Briggs personality type (textbox). If possible, select from list of avitars. Finish profile button.
+
+Task flow 2: Creating a thread
+Screen 1: Home screen with a search box on top (see task flow 9), a list of threads (each thread can be clicked, which transitions to task flow 6). Button labeled "throw a thought" to start a new thread. Three tabs at the bottom: threads, inbox, and my journal. Home screen = threads tab.
+Screen 2: User fills in the following text fields: thread title, thread content, topic tags. Back button to cancel
+Screen 3: Thread view page where user sees their newly created thread. back button for home screen
+Note: When user navigates back to the home screen, this created newly thread gets inputted into the main feed (let's just say chronological order for now).
+
+Task flow 3: Commenting on a thread
+Screen 1: User sees threads on their home screen and can click to open the thread.
+Screen 2: As mentioned in task flow 2, each thread has a title, tags, and content. These are displayed. Main thread also has clickable profile picture of the poster. Below main thread section is the comment section. To comment on the thread, users can simply press “reply to thread.”
+Screen 3: Pop up text edit field appears (or one is created/attached to end of the thread's comments). User can press "cancel" button or "post comment" button.
+Screen 4: User can view their comment along with other people’s comments added to the thread. Comments contain profile picture of commenter and text of the comment. 
+
+Task flow 4: Initiating voice chat
+Screen 1: User can click on a profile picture to view someone's profile
+Screen 2: User sees topics of interest on profile and whether they are currently active. User can press "Invite to DeepTalk!" to request a voice chat.
+Screen 3: Pop up or new screen. User selects topic(s) they are interested in chatting about, can type an optional message, and checks a box that they agree to community norms. User clicks "send request or "cancel request" buttons" and is returned to home screen.
+Screen 4: If declined, the user gets a message that the invitee isn't ready to chat right now.
+Screen 5: If invitee accepts, transitions to task flow 6.
+
+Task flow 5: Accepting voice chat request
+Screen 1: User receives a notification that a chat request has been received and a new message in their inbox (see task flow 8). User can click onto the request and view details and act on the request. 
+Screen 2: User can click onto the request notification (or open message in inbox tab), and view more details including: the name of the inviter, which they can click into their profile; the topics of interest to discuss listed by the inviter; the inviter’s optional message. At the bottom of the request, there are two buttons: accepting the call or declining the call. 
+Screen 3: If the user declines the call, they are redirected back to the home screen. This request is archived in the user inbox.
+Screen 4: If user accepts, transitions to task flow 6.
+
+Task flow 6: Voice chat
+Screen 1: New screen with discord/zoom bot avitar. Bot displays optional conversation starter questions, reminds users to communicate any boundaries/to ask for consent using optional sentence starters like "I'm comfortable discussing ___. I'm not comfortable discussing ___. Is there anything you aren't comfortable talking about?", and reminder of community norms.
+Screen 2: Voice call interface (mute my mic, end call, etc.)
+Screen 3: After call ends, users are asked to share optional feedback to the other person and/or platform. Positive comments will be sent to other person in the call (e.g. "thank you for following the norm of active listening"). Negative comments will be reviewed by moderator. Radio buttons for "positive" and "negative" for type of comment, and "submit feedback" and "skip" buttons. If user submits positive feedback, see task flow 9.
+
+Task flow 7: Modify profile
+Same as task flow 1 except the current profile info is pre-populated.
+
+Task flow 8: Inbox
+Screen 1: User clicks on "inbox" tab. Sees a list of profile pictures, pseudonym names, and message previews for each message in inbox.
+Screen 2: If the user clicks into one message, they can see if the person is online and their previous messages/call hisotry. Past calls have a "invite to deeptalk" button that goes to task flow 4, step 3. 
+
+Task flow 9: My Journal tab
+Screen 1: User clicks "my journal" tab and sees a list of clickable journal note objects. These can look like the messages in the inbox tab or the threds in the threads tab. Journal objects have a title and date. 
+Screen 2: User can click journal object which shows full content of user's journal. User can edit journal full content to add additional reflections from a boice chat or something they read on a thread. user clicks "edit" button to edit and "save changes" button to save changes.
+Screen 3: If user receives positive feedback from a voice chat, a new journal entry is created with the positive compliment/feedback.
+
+
+
