@@ -2,8 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme.js";
 
-import Home from "./pages/Home.js";
-import Profile from "./pages/Profile.js";
+import Home from "./pages/Home.jsx";
+import Profile from "./pages/Profile.jsx";
 
 const router = createBrowserRouter([
   {
