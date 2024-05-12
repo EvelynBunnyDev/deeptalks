@@ -24,6 +24,7 @@ function CreateThreadPage() {
 
     const handleBack = () => {
         setShowThread(false);
+        // TODO: Add logic to navigate back to home page
     };
 
     return (

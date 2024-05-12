@@ -56,8 +56,14 @@ export default function Home() {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Typography variant="h6">Inbox</Typography>
-        {/* Dynamic inbox content rendering */}
+
+       <Typography variant="h6">Inbox</Typography>
+        {/* Adding a Link component to navigate to Inbox */}
+        <Link to="/inbox" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" color="primary">
+            Go to Inbox
+        </Button>
+    </Link>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Typography variant="h6">My Journal</Typography>
