@@ -47,20 +47,21 @@ export default function Home() {
         <Button variant="contained" component={Link} to="/create-thread" sx={{ mt: 2 }}>
           Throw a Thought
         </Button>
+        <Button variant="contained" component={Link} to="/commenting" sx={{ mt: 2 }}>
+          Comment on a Thought
+        </Button>
         <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
-          {/* Placeholder for threads list */}
           <Typography variant="h6">Recent Threads</Typography>
-          {/* Map over threads to create list items */}
+          {/* Dynamic list rendering based on state or props */}
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Typography variant="h6">Inbox</Typography>
-        {/* Placeholder for inbox messages */}
-        
+        {/* Dynamic inbox content rendering */}
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Typography variant="h6">My Journal</Typography>
-        {/* Placeholder for journal entries */}
+        {/* Dynamic journal entries rendering */}
       </TabPanel>
     </Container>
   );
