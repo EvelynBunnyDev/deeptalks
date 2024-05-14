@@ -1,4 +1,3 @@
-// Corresponds to Task flow 3: Comment on a thread in spec
 import React, { useState } from 'react';
 import { Container, Typography, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
 
