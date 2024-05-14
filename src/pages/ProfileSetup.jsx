@@ -1,7 +1,7 @@
 // Corresponds to Task flow 1: Create/Customize your profile in spec
 
 import React, { useState } from 'react';
-import { Container, Typography, Button, Checkbox, FormControlLabel, TextField, Select, MenuItem, Box, FormControl, InputLabel, FormGroup, FormHelperText, AppBar, Tabs, Tab } from '@mui/material';
+import { Container, Typography, Button, Checkbox, FormControlLabel, TextField, Select, MenuItem, Box, FormControl, InputLabel, FormGroup } from '@mui/material';
 
 function ProfileCreation() {
   const [step, setStep] = useState(1);

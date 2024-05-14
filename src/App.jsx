@@ -4,6 +4,7 @@ import theme from "./theme.js";
 
 import Home from "./pages/Home.jsx";
 import Profile from "./pages/Profile.jsx";
+import Deeptalk from "./pages/Deeptalk.jsx";
 import ProfileCreation from "./pages/ProfileSetup.jsx";
 import CreateThreadPage from "./pages/CreateThread.jsx";
 import CommentingPage from "./pages/CommentThread.jsx";
@@ -14,8 +15,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home/>
   }, {
-    path: "/profile",
+    path: "/profile/:userId",
     element: <Profile/>
+  }, {
+    path: "/deeptalk/:inviteId",
+    element: <Deeptalk/>
   }, {
     path: "/signup",
     element: <ProfileCreation/>
