@@ -9,6 +9,7 @@ import ProfileCreation from "./pages/ProfileSetup.jsx";
 import CreateThreadPage from "./pages/CreateThread.jsx";
 import CommentingPage from "./pages/CommentThread.jsx";
 import InboxPage from "./pages/Inbox.jsx";
+import JournalPage from "./pages/Journal.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,9 @@ const router = createBrowserRouter([
   }, {
     path: "/inbox",
     element: <InboxPage/>
+  }, {
+    path: "/journal",
+    element: <JournalPage/>
   }
 ]);
 
