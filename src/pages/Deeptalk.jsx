@@ -51,22 +51,22 @@ export default function Profile() {
         <DialogContent>
           <RadioGroup row value={feedbackType} onChange={e => setFeedbackType(e.target.value)}>
             <FormControlLabel
-              control={<Radio/>} value="positive"
+              control={<Radio />} value="positive"
               label="Positive"
             />
             <FormControlLabel
-              control={<Radio/>} value="negative"
+              control={<Radio />} value="negative"
               label="Negative"
             />
           </RadioGroup>
           <TextField
-              margin="dense"
-              label="Your Feedback"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={feedback}
-              onChange={e => setFeedback(e.target.value)}
+            margin="dense"
+            label="Your Feedback"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={feedback}
+            onChange={e => setFeedback(e.target.value)}
           />
         </DialogContent>
         <DialogActions>

@@ -14,35 +14,35 @@ import JournalPage from "./pages/Journal.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>
+    element: <Home />
   }, {
     path: "/profile/:userId",
-    element: <Profile/>
+    element: <Profile />
   }, {
     path: "/deeptalk/:inviteId",
-    element: <Deeptalk/>
+    element: <Deeptalk />
   }, {
     path: "/signup",
-    element: <ProfileCreation/>
+    element: <ProfileCreation />
   }, {
     path: "/create-thread",
-    element: <CreateThreadPage/>
+    element: <CreateThreadPage />
   }, {
     path: "/commenting",
-    element: <CommentingPage/>
+    element: <CommentingPage />
   }, {
     path: "/inbox",
-    element: <InboxPage/>
+    element: <InboxPage />
   }, {
     path: "/journal",
-    element: <JournalPage/>
+    element: <JournalPage />
   }
 ]);
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </ThemeProvider>
   );
 };
