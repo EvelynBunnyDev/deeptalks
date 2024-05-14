@@ -47,7 +47,7 @@ function Home() {
                             <Typography variant="h6">{thread.title}</Typography>
                             <Typography>{thread.content}</Typography>
                             {isLoggedIn && (
-                                <Button component={Link} to={`/thread/${thread.id}`} sx={{ mt: 1 }}>
+                                <Button component={Link} to={`/commenting`} sx={{ mt: 1 }}>
                                     Comment
                                 </Button>
                             )}
@@ -62,7 +62,7 @@ function Home() {
                                 <Typography variant="h6">{thread.title}</Typography>
                                 <Typography>{thread.content}</Typography>
                                 {true && (
-                                    <Button component={Link} to={`/thread/${thread.id}`} sx={{ mt: 1 }}>
+                                    <Button component={Link} to={`/commenting`} sx={{ mt: 1 }}>
                                         Comment
                                     </Button>
                                 )}
