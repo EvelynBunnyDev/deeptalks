@@ -1,8 +1,9 @@
 // Corresponds to Task flow 1: Create/Customize your profile in spec
 
 import React, { useState } from 'react';
-import { Container, Typography, Button, Checkbox, FormControlLabel, TextField, Select, MenuItem, Box, FormControl, InputLabel, FormGroup } from '@mui/material';
+import { Container, Typography, Button, Checkbox, FormControlLabel, TextField, Select, MenuItem, Box, FormControl, InputLabel, FormGroup, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import QuizComponent from './Quiz';
 
 function ProfileCreation() {
   const [step, setStep] = useState(1);
@@ -44,27 +45,20 @@ function ProfileCreation() {
 
   const ProfileForm = () => (
     <Container maxWidth="sm">
-      {/* {step === 1 && (
-        <Box>
-          <Typography variant="h5">Welcome! Sign Up</Typography>
-          <TextField
-            label="Stanford.edu Email"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            name="email"
-            value={userInput.email}
-            onChange={handleInputChange}
-          />
-          <Button variant="contained" color="primary" onClick={nextStep}>Next</Button>
-        </Box>
-      )} */}
-
       {step === 1 && (
         <Box>
-          <Typography variant="h5">Community Norms and Values</Typography>
-          <Typography>1. Active listening, respect, kindness...</Typography>
-          <Typography>2. Not a mental health app...</Typography>
+          <Typography mb={4}>
+            When using DeepTalks, you agree to the following rules to ensure a safe, respectful, and engaging environment for all users:
+          </Typography>
+          <Typography mb={2}><b>Show Respect and Kindness:</b> Treat others with respect and kindness. Harassment, bullying, and hate speech are strictly prohibited.</Typography>
+          <Typography mb={2}><b>Post Authentic Content:</b> Share genuine content. Do not spread misinformation or impersonate other members of the Stanford community.</Typography>
+          <Typography mb={2}><b>Maintain Privacy:</b> Respect the privacy of others. Do not share personal or confidential information without consent. Posting or threatening to post intimate or sexually explicit media without consent is prohibited.</Typography>
+          <Typography mb={2}><b>Adhere to Legal Standards:</b> Do not post or engage in illegal activities, including sharing obscene content or facilitating prohibited transactions.</Typography>
+          <Typography mb={2}><b>Community Engagement:</b> Engage authentically with communities. Avoid spamming, vote manipulation, or any behavior that disrupts the platform's normal use.</Typography>
+          <Typography mb={4}>
+            <b>Disclaimer:</b> DeepTalks is not a mental health platform. Users are not trained in mental health topics. For your well-being, please refer to campus mental health resources available here:  
+            <Link href="https://studentaffairs.stanford.edu/mental-health-resources-stanford" target="_blank">Mental Health Resources at Stanford</Link>
+          </Typography>
           <FormControlLabel
             control={<Checkbox checked={userInput.agreeNorms} onChange={handleCheckboxChange} name="agreeNorms" />}
             label="I agree to the community norms and values"
@@ -74,35 +68,7 @@ function ProfileCreation() {
       )}
 
       {step === 2 && (
-        <Box>
-          <Typography variant="h5">Confirm Understanding</Typography>
-          <Typography>Conversation example...</Typography>
-          <FormGroup>
-            <FormControl>
-              <InputLabel>What community norm did speaker 1 follow?</InputLabel>
-              <Select
-                value={userInput.quizAnswer1}
-                onChange={handleInputChange}
-                name="quizAnswer1"
-              >
-                <MenuItem value="activeListening">Active Listening</MenuItem>
-                <MenuItem value="respect">Respect</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <InputLabel>What should you do if someone asks for mental health advice?</InputLabel>
-              <Select
-                value={userInput.quizAnswer2}
-                onChange={handleInputChange}
-                name="quizAnswer2"
-              >
-                <MenuItem value="referToProfessional">Refer to Professional</MenuItem>
-                <MenuItem value="giveAdvice">Give Advice</MenuItem>
-              </Select>
-            </FormControl>
-          </FormGroup>
-          <Button variant="contained" color="primary" onClick={nextStep}>Next</Button>
-        </Box>
+        <QuizComponent />
       )}
 
       {step === 3 && (
