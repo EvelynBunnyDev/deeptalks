@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, FormGroup, FormControl, InputLabel, Select, MenuItem, Button } from '@mui/material';
 
-function QuizComponent() {
+function QuizComponent(props) {
   const [userInput, setUserInput] = useState({
     quizAnswer1: '',
     quizAnswer2: '',
@@ -98,7 +98,7 @@ function QuizComponent() {
       <Button 
         variant="contained" 
         color="primary" 
-        onClick={() => console.log('Next step')}
+        onClick={() => {props.callback(userInput)} }
         disabled={!checkAnswers()}
       >
         Next

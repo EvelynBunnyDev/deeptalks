@@ -1,21 +1,11 @@
 import React, { useState } from 'react';
 import { Container, Typography, Button, Box, AppBar, Tab, Tabs, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { THREADS } from '../configs/threads';
 
-function Home() {
+export default function Threads() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Simulate user login state
-  const [threads] = useState([
-    {
-      id: 1,
-      title: "Life After College",
-      content: "Discuss your experiences and future plans post-graduation."
-    },
-    {
-      id: 2,
-      title: "Managing Stress",
-      content: "Share tips and strategies for managing daily stress."
-    }
-  ]);
+  const [threads, setThreads] = useState(THREADS);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -75,4 +65,3 @@ function Home() {
   );
 }
 
-export default Home;

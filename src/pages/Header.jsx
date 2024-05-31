@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { ButtonBase, Grid, Menu, MenuItem, Link } from "@mui/material/";
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
+import logo from "./../logo.jpg";
 
 let barStyle = {
   color: "black",
@@ -51,6 +52,8 @@ export default function NavBar(props) {
             </Typography>
             <Grid container columnSpacing={2} justifyContent="flex-end" alignItems="center">
               <Grid item>
+
+            {/* <img src={logo} alt="Logo" style={{ height: '50px', marginRight: '20px' }} /> */}
                 {createPostButton}
                 <Link href="/Inbox" style={{ textDecoration: 'none' }}>
                   <Button style={buttonStyle}>View Inbox</Button>

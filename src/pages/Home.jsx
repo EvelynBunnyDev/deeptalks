@@ -1,9 +1,10 @@
 // Import necessary components from Material-UI, React Router, and local components
 import React, { useState } from 'react';
-import { Container, Typography, Button, Box, Paper } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Container, Typography, Button, Box, Paper, THEME_ID } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from './Header';
 import Threads from './Threads'; 
+import { THREADS } from '../configs/threads';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -27,18 +28,8 @@ function TabPanel(props) {
 
 export default function Home() {
   const [value] = useState(0);
-  const [threads] = useState([
-    {
-      id: 1,
-      title: "Life After College",
-      content: "Discuss your experiences and future plans post-graduation."
-    },
-    {
-      id: 2,
-      title: "Managing Stress",
-      content: "Share tips and strategies for managing daily stress."
-    }
-  ]);
+  const [threads] = useState(THREADS);
+  const navigate = useNavigate();
 
   return (
     <Container maxWidth="lg">
@@ -51,9 +42,6 @@ export default function Home() {
         </Button>
 
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Threads /> {/* Render the Thread component */}
-      </TabPanel>
       <TabPanel value={value} index={2}>
         {/* Other content if needed */}
         <Typography variant="h6">Additional Resources or Content</Typography>
@@ -63,7 +51,11 @@ export default function Home() {
         {threads.length === 0 && <Typography variant="body1">No threads available.</Typography>}
         {
           threads.map((thread) => (
-            <Paper key={thread.id} elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
+            <Paper key={thread.id} elevation={3} sx={{ padding: 2, marginBottom: 2 }}
+              onClick={() => {
+                navigate(`/thread/${thread.id}`);
+              }}
+            >
               <Typography variant="h6">{thread.title}</Typography>
               <Typography>{thread.content}</Typography>
               {true && (

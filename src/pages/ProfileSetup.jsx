@@ -68,7 +68,7 @@ function ProfileCreation() {
       )}
 
       {step === 2 && (
-        <QuizComponent />
+        <QuizComponent callback={nextStep} />
       )}
 
       {step === 3 && (
@@ -101,7 +101,7 @@ function ProfileCreation() {
               onChange={handleInputChange}
               name="interest"
             >
-              <MenuItem value="postGraduation">Post-Graduation Thoughts</MenuItem>
+              <MenuItem value="postGraduation">Graduation Thoughts</MenuItem>
               <MenuItem value="firstExperiences">First Experiences</MenuItem>
             </Select>
           </FormControl>

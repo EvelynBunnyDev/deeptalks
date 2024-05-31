@@ -13,6 +13,7 @@ import InboxPage from "./pages/Inbox.jsx";
 import JournalPage from "./pages/Journal.jsx";
 import SignInSide from "./pages/SignIn.jsx";
 import SignUpSide from "./pages/SignUp.jsx";
+import ThreadPage from "./pages/ThreadPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   }, {
     path: "/journal",
     element: <JournalPage />
+  } , {
+    // page for each thread with id
+    path: "/thread/:threadId",
+    element: <ThreadPage/>
   }
 ]);
 
