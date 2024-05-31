@@ -31,8 +31,9 @@ function CreateThreadPage() {
     };
 
     return (
+      <>  
+      <NavBar />
         <Container maxWidth="md">
-            <NavBar />
             {!showThread ? (
                 <Box>
                     <TextField
@@ -82,6 +83,7 @@ function CreateThreadPage() {
                 </Box>
             )}
         </Container>
+        </>
     );
 }
 

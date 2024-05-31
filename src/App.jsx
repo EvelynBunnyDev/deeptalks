@@ -38,7 +38,7 @@ const router = createBrowserRouter([
     path: "/create-thread",
     element: <CreateThreadPage />
   }, {
-    path: "/commenting",
+    path: "/commenting/:threadId",
     element: <CommentingPage />
   }, {
     path: "/inbox",
