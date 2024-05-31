@@ -49,7 +49,7 @@ const router = createBrowserRouter([
   } , {
     // page for each thread with id
     path: "/thread/:threadId",
-    element: <ThreadPage/>
+    element: <ThreadPage />
   }
 ]);
 
