@@ -22,7 +22,7 @@ function InboxPage() {
             {!selectedMessage ? (
                 <List>
                     {messages.map((message) => (
-                        <ListItem button onClick={() => selectMessage(message)} key={message.id}>
+                        <ListItem onClick={() => selectMessage(message)} key={message.id}>
                             <ListItemAvatar>
                                 <Avatar>{message.sender[0]}</Avatar>
                             </ListItemAvatar>

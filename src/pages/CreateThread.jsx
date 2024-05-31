@@ -1,11 +1,14 @@
 // Corresponds to Task flow 2: Create a thread in spec
 import React, { useState } from 'react';
 import { Container, TextField, Button, AppBar, Tabs, Tab, Box, Typography } from '@mui/material';
+import NavBar from './Header';
+import { useNavigate } from 'react-router-dom';
 
 function CreateThreadPage() {
     const [value, setValue] = useState(0);
     const [thread, setThread] = useState({ title: '', content: '', tags: '' });
     const [showThread, setShowThread] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -24,18 +27,12 @@ function CreateThreadPage() {
 
     const handleBack = () => {
         setShowThread(false);
-        // TODO: Add logic to navigate back to home page
+        navigate('/')
     };
 
     return (
         <Container maxWidth="md">
-            <AppBar position="static">
-                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                    <Tab label="Threads" />
-                    <Tab label="Inbox" />
-                    <Tab label="My Journal" />
-                </Tabs>
-            </AppBar>
+            <NavBar />
             {!showThread ? (
                 <Box>
                     <TextField

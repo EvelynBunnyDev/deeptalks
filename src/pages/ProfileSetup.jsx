@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import { Container, Typography, Button, Checkbox, FormControlLabel, TextField, Select, MenuItem, Box, FormControl, InputLabel, FormGroup } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileCreation() {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
   const [userInput, setUserInput] = useState({
     email: '',
     agreeNorms: false,
@@ -36,9 +38,13 @@ function ProfileCreation() {
     setStep(prevStep => prevStep + 1);
   };
 
+  const finishStep = () => {
+    navigate("/");
+  };
+
   const ProfileForm = () => (
     <Container maxWidth="sm">
-      {step === 1 && (
+      {/* {step === 1 && (
         <Box>
           <Typography variant="h5">Welcome! Sign Up</Typography>
           <TextField
@@ -52,9 +58,9 @@ function ProfileCreation() {
           />
           <Button variant="contained" color="primary" onClick={nextStep}>Next</Button>
         </Box>
-      )}
+      )} */}
 
-      {step === 2 && (
+      {step === 1 && (
         <Box>
           <Typography variant="h5">Community Norms and Values</Typography>
           <Typography>1. Active listening, respect, kindness...</Typography>
@@ -67,7 +73,7 @@ function ProfileCreation() {
         </Box>
       )}
 
-      {step === 3 && (
+      {step === 2 && (
         <Box>
           <Typography variant="h5">Confirm Understanding</Typography>
           <Typography>Conversation example...</Typography>
@@ -99,7 +105,7 @@ function ProfileCreation() {
         </Box>
       )}
 
-      {step === 4 && (
+      {step === 3 && (
         <Box>
           <Typography variant="h5">Customize Profile</Typography>
           <TextField
@@ -142,7 +148,7 @@ function ProfileCreation() {
             value={userInput.personalityType}
             onChange={handleInputChange}
           />
-          <Button variant="contained" color="primary" onClick={nextStep}>Finish Profile</Button>
+          <Button variant="contained" color="primary" onClick={finishStep}>Finish Profile</Button>
         </Box>
       )}
     </Container>

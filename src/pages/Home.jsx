@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Container, Typography, Button, Box, AppBar, Tab, Tabs, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 import NavBar from './Header';
-import Threads from './Threads'; // Assuming Thread.jsx exports a component that lists threads
+import Threads from './Threads'; 
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;

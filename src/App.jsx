@@ -1,3 +1,4 @@
+import style from "./style.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme.js";
@@ -10,6 +11,8 @@ import CreateThreadPage from "./pages/CreateThread.jsx";
 import CommentingPage from "./pages/CommentThread.jsx";
 import InboxPage from "./pages/Inbox.jsx";
 import JournalPage from "./pages/Journal.jsx";
+import SignInSide from "./pages/SignIn.jsx";
+import SignUpSide from "./pages/SignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +24,12 @@ const router = createBrowserRouter([
   }, {
     path: "/deeptalk/:inviteId",
     element: <Deeptalk/>
+  }, {
+    path:"/signin",
+    element: <SignInSide/>
+  },{
+    path:"/sign-up",
+    element: <SignUpSide/>
   }, {
     path: "/signup",
     element: <ProfileCreation/>
