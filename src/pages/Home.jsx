@@ -46,10 +46,6 @@ export default function Home() {
 
       <TabPanel value={value} index={0}>
         <Typography variant="h4">Welcome to DeepTalks!</Typography>
-        {/* TODO: The following signup mechanism is very tentative. We need to implement authentication mechanism later. */}
-        <Button variant="contained" color="primary" component={Link} to="/signup">
-          Sign up with stanford.edu email
-        </Button>
         <Button variant="contained" component={Link} to="/create-thread" sx={{ mt: 2 }}>
           Throw a Thought
         </Button>
