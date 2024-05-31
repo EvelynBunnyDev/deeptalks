@@ -41,7 +41,7 @@ export default function SignUpSide() {
       password: data.get('password'),
     });
 
-    // @TODO: Add authentication logic here
+    // TODO: Add authentication logic here
 
     navigate('/signup')
   };

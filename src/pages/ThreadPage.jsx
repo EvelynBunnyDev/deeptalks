@@ -17,23 +17,30 @@ export default function ThreadPage() {
           {curThread.content}
         </Typography>
       </Grid>
-      <Grid item>
-        <Typography variant="h4" component="h2">
-          Comments
-        </Typography>
-        {curThread.comments.map((comment, index) => (
-          <Card key={index} sx={{ mb: 2 }}>
-            <CardContent>
-              <Typography variant="subtitle1">
-                Author: <RouterLink to={`/profile/${comment.author}`}>{comment.author}</RouterLink>
-              </Typography>
-              <Typography variant="body2">
-                {comment.content}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
+      {curThread.comments && curThread.comments.length > 0 && (
+        <Grid item>
+          <Typography variant="h4" component="h2">
+            Comments
+          </Typography>
+          {curThread.comments.map((comment, index) => {
+            if (comment.content.trim() !== "") { // Checks if comment content is not just empty spaces
+              return (
+                <Card key={index} sx={{ mb: 2 }}>
+                  <CardContent>
+                    <Typography variant="subtitle1">
+                      Author: <RouterLink to={`/profile/${comment.author}`}>{comment.author}</RouterLink>
+                    </Typography>
+                    <Typography variant="body2">
+                      {comment.content}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              );
+            }
+            return null; // Return null if the comment is empty, thus not rendering anything
+          })}
       </Grid>
+      )}
     </Grid>
   );
 }
