@@ -49,22 +49,22 @@ export default function Profile() {
           <FormGroup>
             {user.topics.map(t => (
               <FormControlLabel
-                control={<Checkbox checked={inviteTopics.includes(t)} onChange={e => handleTopic(e, t)}/>}
+                control={<Checkbox checked={inviteTopics.includes(t)} onChange={e => handleTopic(e, t)} />}
                 label={t}
               />
             ))}
           </FormGroup>
           <TextField
-              margin="dense"
-              label="Optional Message"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={message}
-              onChange={e => setMessage(e.target.value)}
+            margin="dense"
+            label="Optional Message"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={message}
+            onChange={e => setMessage(e.target.value)}
           />
           <FormControlLabel
-            control={<Checkbox checked={agreeNorms} onChange={e => setAgreeNorms(e.target.checked)}/>}
+            control={<Checkbox checked={agreeNorms} onChange={e => setAgreeNorms(e.target.checked)} />}
             label="I agree to the community norms and values"
           />
         </DialogContent>

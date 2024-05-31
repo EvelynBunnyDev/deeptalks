@@ -24,7 +24,7 @@ function JournalPage() {
 
   // Handle saving the edited content
   const handleSave = () => {
-    setJournal({...journal, content: editableContent});
+    setJournal({ ...journal, content: editableContent });
     setEditMode(false);
   };
 

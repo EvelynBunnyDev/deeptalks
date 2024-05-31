@@ -1,12 +1,12 @@
 const USERS = {
-  johndoe: {
-    id: "johndoe",
+  1: {
+    id: 1,
     pseudonym: "JohnDoe",
     status: "Online",
     topics: ["A topic", "Another topic"]
   },
-  janesmith: {
-    id: "janesmith",
+  2: {
+    id: 2,
     pseudonym: "JaneSmith",
     status: "Offline",
     topics: ["a topic", "Different"]

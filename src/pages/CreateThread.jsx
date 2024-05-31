@@ -10,20 +10,20 @@ function CreateThreadPage() {
     const [showThread, setShowThread] = useState(false);
     const navigate = useNavigate();
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setThread(prev => ({ ...prev, [name]: value }));
-    };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setThread(prev => ({ ...prev, [name]: value }));
+  };
 
-    const handleSubmit = () => {
-        // Assuming a function to send data to backend or state management
-        console.log(thread); // TODO: replace this with our backend logic
-        setShowThread(true);
-    };
+  const handleSubmit = () => {
+    // Assuming a function to send data to backend or state management
+    console.log(thread); // TODO: replace this with our backend logic
+    setShowThread(true);
+  };
 
     const handleBack = () => {
         setShowThread(false);

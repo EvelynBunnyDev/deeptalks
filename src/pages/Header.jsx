@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { ButtonBase, Grid, Popover, Menu, MenuItem, Link } from "@mui/material/";
+import { ButtonBase, Grid, Menu, MenuItem, Link } from "@mui/material/";
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 
@@ -22,7 +22,7 @@ let buttonStyle = {
 };
 
 export default function NavBar(props) {
-  const {title, post, type} = props;
+  const { title, post, type } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -53,15 +53,15 @@ export default function NavBar(props) {
               <Grid item>
                 {createPostButton}
                 <Link href="/Inbox" style={{ textDecoration: 'none' }}>
-                <Button style={buttonStyle}>View Inbox</Button>
+                  <Button style={buttonStyle}>View Inbox</Button>
                 </Link>
                 <Link href="/Journal" style={{ textDecoration: 'none' }}>
-                <Button style={buttonStyle}>View Journal Entries</Button>
+                  <Button style={buttonStyle}>View Journal Entries</Button>
                 </Link>
               </Grid>
               <Grid item>
                 <ButtonBase variant="contained" onClick={handleClick}>
-                  <AccountCircleRoundedIcon fontSize="large" sx={{color:"#33363F"}}/> <ExpandMoreRoundedIcon ontSize="large" sx={{color:"#33363F"}}/>
+                  <AccountCircleRoundedIcon fontSize="large" sx={{ color: "#33363F" }} /> <ExpandMoreRoundedIcon ontSize="large" sx={{ color: "#33363F" }} />
                 </ButtonBase>
                 <Menu
                   open={open}
@@ -72,9 +72,9 @@ export default function NavBar(props) {
                     horizontal: 'left',
                   }}
                 >
-                  
-                  <a href="/Profile"><MenuItem sx={{color: "#33363F"}}>Account Settings</MenuItem></a> 
-                  <MenuItem sx={{color: "darkred"}}>Logout</MenuItem>
+
+                  <a href="/Profile"><MenuItem sx={{ color: "#33363F" }}>Account Settings</MenuItem></a>
+                  <MenuItem sx={{ color: "darkred" }}>Logout</MenuItem>
                 </Menu>
               </Grid>
 
