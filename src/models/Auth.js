@@ -18,6 +18,11 @@ class Auth {
     return user;
   }
 
+  logout(user) {
+    google.accounts.id.revoke(user.email);
+    Api.setKey(null);
+  }
+
   render(parent, onLogin) {
     this._callback = onLogin;
     google.accounts.id.renderButton(parent, { theme: "outline", text: "signin" });

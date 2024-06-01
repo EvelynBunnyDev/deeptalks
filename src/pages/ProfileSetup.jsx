@@ -6,7 +6,7 @@ import QuizComponent from './Quiz';
 import Api from "../models/Api.js";
 
 function ProfileCreation() {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const location = useLocation();
   const navigate = useNavigate();
 

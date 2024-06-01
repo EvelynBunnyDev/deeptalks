@@ -4,10 +4,11 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { ButtonBase, Grid, Menu, MenuItem, Link } from "@mui/material/";
+import { ButtonBase, Grid, Menu, MenuItem } from "@mui/material/";
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import { useNavigate } from "react-router-dom";
+import Link from "../components/Link.js";
 //import logo from "./../logo.jpg";
 
 import Api from "../models/Api.js";
@@ -68,6 +69,11 @@ export default function NavBar(props) {
     });
   };
 
+  const handleLogout = () => {
+    Auth.logout(currentUser);
+    setCurrentUser(null);
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -82,7 +88,7 @@ export default function NavBar(props) {
               {currentUser ? <>
                 <Grid item>
                   {createPostButton}
-                  <Link href="/Journal" style={{ textDecoration: 'none' }}>
+                  <Link to="/journal" style={{ textDecoration: 'none' }}>
                     <Button style={buttonStyle}>View Journal Entries</Button>
                   </Link>
                 </Grid>
@@ -100,8 +106,8 @@ export default function NavBar(props) {
                     }}
                   >
 
-                    <a href="/Profile"><MenuItem sx={{ color: "#33363F" }}>Account Settings</MenuItem></a>
-                    <MenuItem sx={{ color: "darkred" }}>Logout</MenuItem>
+                    <Link to="/profile"><MenuItem sx={{ color: "#33363F" }}>Account Settings</MenuItem></Link>
+                    <MenuItem sx={{ color: "darkred" }} onClick={handleLogout}>Logout</MenuItem>
                   </Menu>
                 </Grid>
                 </> : loading ? <>
