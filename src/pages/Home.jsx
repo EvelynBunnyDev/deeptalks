@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { Container, Typography, Button, Box, Paper, THEME_ID } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from './Header';
-import Threads from './Threads'; 
+import Threads from './Threads';
 import { THREADS } from '../configs/threads';
+import { UserAvatar } from './UserPage';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,17 +53,32 @@ export default function Home() {
         {
           threads.map((thread) => (
             <Paper key={thread.id} elevation={3} sx={{ padding: 2, marginBottom: 2 }}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '8px'
+              }}
+            >
+              <div 
               onClick={() => {
                 navigate(`/thread/${thread.id}`);
               }}
-            >
-              <Typography variant="h6">{thread.title}</Typography>
-              <Typography>{thread.content}</Typography>
-              {true && (
-                <Button component={Link} to={`/commenting`} sx={{ mt: 1 }}>
-                  Comment
-                </Button>
-              )}
+              style={{
+                height: '100%',
+              }}
+              >
+                <Typography variant="h6">{thread.title}</Typography>
+                <Typography>{thread.content}</Typography>
+                {true && (
+                  <Button component={Link} to={`/commenting`} sx={{ mt: 1 }}>
+                    Comment
+                  </Button>
+                )}
+              </div>
+              <UserAvatar id={thread.author_id} />
+
+
             </Paper>
           ))
         }

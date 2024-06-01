@@ -14,6 +14,7 @@ import JournalPage from "./pages/Journal.jsx";
 import SignInSide from "./pages/SignIn.jsx";
 import SignUpSide from "./pages/SignUp.jsx";
 import ThreadPage from "./pages/ThreadPage.jsx";
+import { UserPage } from "./pages/UserPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     element: <Home />
   }, {
     path: "/profile/:userId",
-    element: <Profile />
+    element: <UserPage />
   }, {
     path: "/deeptalk/:inviteId",
     element: <Deeptalk />

@@ -19,7 +19,6 @@ let barStyle = {
 let buttonStyle = {
   padding: "5px 20px",
   color: "black",
-  // marginLeft: "auto"
 };
 
 export default function NavBar(props) {
@@ -55,9 +54,6 @@ export default function NavBar(props) {
 
             {/* <img src={logo} alt="Logo" style={{ height: '50px', marginRight: '20px' }} /> */}
                 {createPostButton}
-                <Link href="/Inbox" style={{ textDecoration: 'none' }}>
-                  <Button style={buttonStyle}>View Inbox</Button>
-                </Link>
                 <Link href="/Journal" style={{ textDecoration: 'none' }}>
                   <Button style={buttonStyle}>View Journal Entries</Button>
                 </Link>
