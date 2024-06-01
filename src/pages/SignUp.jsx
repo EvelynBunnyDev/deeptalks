@@ -86,7 +86,7 @@ export default function SignUpSide() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Your Stanford Email Address"
                 name="email"
                 autoComplete="email"
                 autoFocus
