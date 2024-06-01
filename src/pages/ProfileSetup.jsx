@@ -1,18 +1,20 @@
-// Corresponds to Task flow 1: Create/Customize your profile in spec
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Typography, Button, Checkbox, FormControlLabel, TextField, Select, MenuItem, Box, FormControl, InputLabel, FormGroup, Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import QuizComponent from './Quiz';
 
+import Api from "../models/Api.js";
+
 function ProfileCreation() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
+  const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!location.state?.apiKey) navigate("/");
+  }, [location, navigate]);
   const [userInput, setUserInput] = useState({
-    email: '',
     agreeNorms: false,
-    quizAnswer1: '',
-    quizAnswer2: '',
     bio: '',
     pseudonym: '',
     personalityType: '',
@@ -39,11 +41,22 @@ function ProfileCreation() {
     setStep(prevStep => prevStep + 1);
   };
 
-  const finishStep = () => {
-    navigate("/");
+  const finishStep = async () => {
+    const { apiKey } = location.state;
+    const { pseudonym, bio, interest, personalityType } = userInput;
+    try {
+      await Api.req("POST", "/users", {
+        apiKey, pseudonym, bio, interest, personalityType
+      });
+      Api.setKey(apiKey);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      navigate("/");
+    }
   };
 
-  const ProfileForm = () => (
+  return (
     <Container maxWidth="sm">
       {step === 1 && (
         <Box>
@@ -81,6 +94,7 @@ function ProfileCreation() {
             margin="normal"
             name="pseudonym"
             value={userInput.pseudonym}
+            required
             onChange={handleInputChange}
           />
           <TextField
@@ -114,13 +128,11 @@ function ProfileCreation() {
             value={userInput.personalityType}
             onChange={handleInputChange}
           />
-          <Button variant="contained" color="primary" onClick={finishStep}>Finish Profile</Button>
+          <Button variant="contained" color="primary" disabled={!userInput.pseudonym} onClick={finishStep}>Finish Profile</Button>
         </Box>
       )}
     </Container>
   );
-
-  return <ProfileForm />;
 }
 
 export default ProfileCreation;

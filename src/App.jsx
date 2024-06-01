@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />
   }, {
-    path: "/profile/:userId",
+    path: "/profile/:userId?",
     element: <UserPage />
   }, {
     path: "/deeptalk/:inviteId",

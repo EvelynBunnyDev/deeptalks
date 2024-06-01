@@ -7,7 +7,11 @@ import Button from "@mui/material/Button";
 import { ButtonBase, Grid, Menu, MenuItem, Link } from "@mui/material/";
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
-import logo from "./../logo.jpg";
+import { useNavigate } from "react-router-dom";
+//import logo from "./../logo.jpg";
+
+import Api from "../models/Api.js";
+import Auth from "../models/Auth.js";
 
 let barStyle = {
   color: "black",
@@ -41,6 +45,29 @@ export default function NavBar(props) {
       createPostButton = <a href="/createGroupPost" style={buttonStyle}><Button>Create a post</Button></a>;
     }
   }
+
+  const [loading, setLoading] = React.useState(true);
+  const [currentUser, setCurrentUser] = React.useState(null);
+  React.useEffect(() => void (async () => {
+    const user = await Auth.check();
+    setCurrentUser(user);
+    setLoading(false);
+  })(), []);
+
+  const navigate = useNavigate();
+  const handleDiv = (node) => {
+    if (!node) return;
+    Auth.render(node, (data) => {
+      const { apiKey, email, user } = data;
+      if (user) {
+        Api.setKey(apiKey);
+        setCurrentUser(user);
+      } else {
+        navigate("/signup", { state: { apiKey, email } });
+      }
+    });
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -50,32 +77,38 @@ export default function NavBar(props) {
               <b>{title}</b>
             </Typography>
             <Grid container columnSpacing={2} justifyContent="flex-end" alignItems="center">
-              <Grid item>
-
             {/* <img src={logo} alt="Logo" style={{ height: '50px', marginRight: '20px' }} /> */}
-                {createPostButton}
-                <Link href="/Journal" style={{ textDecoration: 'none' }}>
-                  <Button style={buttonStyle}>View Journal Entries</Button>
-                </Link>
-              </Grid>
-              <Grid item>
-                <ButtonBase variant="contained" onClick={handleClick}>
-                  <AccountCircleRoundedIcon fontSize="large" sx={{ color: "#33363F" }} /> <ExpandMoreRoundedIcon ontSize="large" sx={{ color: "#33363F" }} />
-                </ButtonBase>
-                <Menu
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                >
 
-                  <a href="/Profile"><MenuItem sx={{ color: "#33363F" }}>Account Settings</MenuItem></a>
-                  <MenuItem sx={{ color: "darkred" }}>Logout</MenuItem>
-                </Menu>
-              </Grid>
+              {currentUser ? <>
+                <Grid item>
+                  {createPostButton}
+                  <Link href="/Journal" style={{ textDecoration: 'none' }}>
+                    <Button style={buttonStyle}>View Journal Entries</Button>
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <ButtonBase variant="contained" onClick={handleClick}>
+                    <AccountCircleRoundedIcon fontSize="large" sx={{ color: "#33363F" }} /> <ExpandMoreRoundedIcon fontSize="large" sx={{ color: "#33363F" }} />
+                  </ButtonBase>
+                  <Menu
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                  >
+
+                    <a href="/Profile"><MenuItem sx={{ color: "#33363F" }}>Account Settings</MenuItem></a>
+                    <MenuItem sx={{ color: "darkred" }}>Logout</MenuItem>
+                  </Menu>
+                </Grid>
+                </> : loading ? <>
+                  <Typography>Loading...</Typography>
+                </> : <>
+                  <div ref={handleDiv}/>
+                </>}
 
             </Grid>
           </Toolbar>
