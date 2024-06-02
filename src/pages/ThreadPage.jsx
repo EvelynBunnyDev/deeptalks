@@ -1,29 +1,42 @@
 import React from "react";
-import { useParams, Link as RouterLink } from "react-router-dom";
-import { Typography, Card, CardContent, Grid, Button } from "@mui/material";  // Import Button from MUI
+import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
+import { Typography, Card, CardContent, Container, Grid, Button } from "@mui/material";  // Import Button from MUI
 import { THREADS } from "../configs/threads";
 import NavBar from "./Header";
-import { getUser } from "../configs/users";
-import { UserAvatar } from "./UserPage";
+import Link from "../components/Link";
+
+import getThreads from "../models/Threads.js";
+import getUsers from "../models/Users.js";
 
 export default function ThreadPage() {
   const { threadId } = useParams();
-  const curThread = THREADS[parseInt(threadId)];
+  const [thread, setThread] = React.useState(null);
+  const [users, setUsers] = React.useState([]);
+  const navigate = useNavigate();
+
+  React.useEffect(() => void (async () => {
+    const [users, threads] = await Promise.all([getUsers(), getThreads()]);
+    setUsers(users);
+    const thread = threads[threadId];
+    if (!thread) navigate("/");
+    setThread(thread);
+  })(), []);
 
   return (
-    <>
+    <Container maxWidth="lg">
       <NavBar />
+      {!thread ? <Typography>Loading...</Typography> :
       <Grid container spacing={2} direction="column" sx={{ p: 4 }}>
         <Grid container spacing={2} direction="row">
-          <Grid item>
-            <UserAvatar id={curThread.author_id} />
-          </Grid>
           <Grid item spacing={2}>
             <Typography variant="h3" component="h1">
-              {curThread.title}
+              {thread.title}
             </Typography>
             <Typography variant="body1" paragraph>
-              {curThread.content}
+              {thread.content}
+            </Typography>
+            <Typography variant="body1" paragraph>
+              Author: <Link to={`/profile/${thread.author_id}`}>{users[thread.author_id].pseudonym}</Link>
             </Typography>
             {/* Add Button to navigate to commenting page */}
             <Button
@@ -38,32 +51,27 @@ export default function ThreadPage() {
           </Grid>
 
         </Grid>
-        {curThread.comments && curThread.comments.length > 0 && (
-          <Grid item>
-            <Typography variant="h4" component="h2">
-              Comments
-            </Typography>
-            {curThread.comments.map((comment, index) => {
-              if (comment.content.trim() !== "") { // Checks if comment content is not just empty spaces
-                const author = getUser(comment.author_id);
-                return (
-                  <Card key={index} sx={{ mb: 2 }}>
-                    <CardContent>
-                      <Typography variant="subtitle1">
-                        Author: <a href={`/profile/${author.id}`}>{author.name}</a>
-                      </Typography>
-                      <Typography variant="body2">
-                        {comment.content}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                );
-              }
-              return null; // Return null if the comment is empty, thus not rendering anything
-            })}
-          </Grid>
-        )}
-      </Grid>
-    </>
+        <Grid item>
+          <Typography variant="h4" component="h2">
+            Comments
+          </Typography>
+          {thread.comments.map((comment, index) => {
+            const author = users[comment.author_id];
+            return (
+              <Card key={index} sx={{ mb: 2 }}>
+                <CardContent>
+                  <Typography variant="subtitle1">
+                    Author: <Link to={`/profile/${author._id}`}>{author.pseudonym}</Link>
+                  </Typography>
+                  <Typography variant="body2">
+                    {comment.content}
+                  </Typography>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </Grid>
+      </Grid>}
+    </Container>
   );
 }

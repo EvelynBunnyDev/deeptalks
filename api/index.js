@@ -16,6 +16,7 @@ const api = express.Router();
 
 let db;
 let Users;
+let Threads;
 
 app.set("json spaces", 2);
 app.use(bodyParser.json(), cors());
@@ -23,22 +24,12 @@ app.use("/api", async (req, res, next) => {
   const conn = await MongoClient.connect(MONGODB_URL);
   db = conn.db("deeptalks");
   Users = db.collection("users");
+  Threads = db.collection("threads");
   next();
 }, api);
 
 api.get("/", (req, res) => {
   res.json({ message: "Hello, world!" });
-});
-
-api.get("/db", async (req, res) => {
-  const test = await db.collection("test").find().toArray();
-  res.json({ test });
-});
-
-api.post("/db", async (req, res) => {
-  const test = req.body;
-  await db.collection("test").insertOne(test);
-  res.json({ test });
 });
 
 function checkKey(key) {
@@ -50,6 +41,11 @@ function checkKey(key) {
     console.error(e);
     return null;
   }
+}
+
+function requireAuth(req, res, next) {
+  if (!res.locals.user) return res.status(401).json({ error: "Must be logged in" });
+  next();
 }
 
 api.use(async (req, res, next) => {
@@ -88,6 +84,15 @@ api.post("/login", async (req, res) => {
   res.json({ apiKey, email, user });
 });
 
+api.get("/users", async (req, res) => {
+  const users = {};
+  for (const user of await Users.find().toArray()) {
+    delete user.email;
+    users[user._id] = user;
+  }
+  res.json(users);
+});
+
 api.post("/users", async (req, res) => {
   const body = req.body;
   const verified = checkKey(body.apiKey);
@@ -106,6 +111,34 @@ api.get("/me", (req, res) => {
   const { user } = res.locals;
   if (!user) return res.json(null);
   res.json(user);
+});
+
+api.get("/threads", async (req, res) => {
+  const threads = {};
+  for (const t of await Threads.find().toArray()) {
+    threads[t._id] = t;
+  }
+  res.json(threads);
+});
+
+api.post("/threads", requireAuth, async (req, res) => {
+  const { title, content } = req.body;
+  const author_id = res.locals.user._id;
+  const ids = await Threads.find().sort({ _id: -1 }).limit(1).toArray();
+  const _id = (ids[0]?._id || 0) + 1;
+  await Threads.insertOne({ _id, title, content, author_id, comments: [] });
+  res.json({ _id });
+});
+
+api.post("/threads/:id/comments", requireAuth, async (req, res) => {
+  const thread = await Threads.findOne({ _id: Number(req.params.id) });
+  if (!thread) return res.status(404).json({ error: "Thread not found" });
+
+  const { content } = req.body;
+  const author_id = res.locals.user._id;
+  thread.comments.push({ content, author_id });
+  await Threads.replaceOne({ _id: thread._id }, thread);
+  res.json({ success: true });
 });
 
 /* Catch-all route to return a JSON error if endpoint not defined.

@@ -5,7 +5,7 @@ import {
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import INVITES from "../models/invite.js";
-import USERS from "../models/user.js";
+import USERS from "../models/Users.js";
 
 export default function Profile() {
   const { inviteId } = useParams();
