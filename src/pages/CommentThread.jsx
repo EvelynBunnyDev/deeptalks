@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom';
 import { Container, TextField, Button, Typography } from '@mui/material';
 import NavBar from './Header';
+
+import Auth from "../models/Auth.js";
 import getThreads, { newComment } from "../models/Threads.js";
 
 function CommentPage() {
@@ -15,6 +17,7 @@ function CommentPage() {
   };
 
   React.useEffect(() => void (async () => {
+    await Auth.require(navigate);
     const threads = await getThreads();
     const thread = threads[threadId];
     if (!thread) navigate("/");

@@ -14,8 +14,16 @@ class Auth {
   }
 
   async check() {
+    if (!Api.key) return null;
     const user = await Api.req("GET", "/me");
     return user;
+  }
+
+  async require(navigate) {
+    const user = await this.check();
+    console.log("require", user);
+    if (user) return;
+    navigate("/");
   }
 
   logout(user) {

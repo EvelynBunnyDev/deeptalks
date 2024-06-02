@@ -17,6 +17,8 @@ const api = express.Router();
 let db;
 let Users;
 let Threads;
+let Invites;
+let Journals;
 
 app.set("json spaces", 2);
 app.use(bodyParser.json(), cors());
@@ -25,6 +27,8 @@ app.use("/api", async (req, res, next) => {
   db = conn.db("deeptalks");
   Users = db.collection("users");
   Threads = db.collection("threads");
+  Invites = db.collection("invites");
+  Journals = db.collection("journals");
   next();
 }, api);
 
@@ -141,11 +145,48 @@ api.post("/threads/:id/comments", requireAuth, async (req, res) => {
   res.json({ success: true });
 });
 
+api.get("/invites", requireAuth, async (req, res) => {
+  const invites = await Invites.find({ recipient_id: res.locals.user._id, status: "pending" }).toArray();
+  res.json({ invites });
+});
+
+api.post("/invites", requireAuth, async (req, res) => {
+  const { message, recipient, topics } = req.body;
+  const r = await Users.findOne({ _id: recipient });
+  if (!r) return res.status(404).json({ error: "Invalid recipient" });
+  const ids = await Invites.find().sort({ _id: -1 }).limit(1).toArray();
+  const _id = (ids[0]?._id || 0) + 1;
+  await Invites.insertOne({ _id, sender_id: res.locals.user._id, recipient_id: r._id, message, topics, status: "pending" });
+  res.json({ success: true });
+});
+
+api.post("/invites/:id/:action", requireAuth, async (req, res) => {
+  const { id, action } = req.params;
+  if (action !== "accept" && action !== "decline") return res.status(400).json({ error: "Invalid action" });
+  const i = await Invites.findOne({ _id: id }).toArray();
+  if (!i || i.recipient_id !== res.locals.user._id || i.status !== "pending") return res.status(400).json({ error: "Invalid invite" });
+  i.status = action;
+  await Invites.replaceOne({ _id: i._id }, i);
+  res.json({ success: true });
+});
+
+api.get("/journal", requireAuth, async (req, res) => {
+  const entries = await Journals.find({ author_id: res.locals.user._id }).toArray();
+  res.json({ entries });
+});
+
+api.post("/journal", requireAuth, async (req, res) => {
+  const { content } = req.body;
+  const ids = await Journals.find().sort({ _id: -1 }).limit(1).toArray();
+  const _id = (ids[0]?._id || 0) + 1;
+  await Journals.insertOne({ _id, author_id: res.locals.user._id, time: new Date(), content });
+  res.json({ success: true });
+});
+
 /* Catch-all route to return a JSON error if endpoint not defined.
    Be sure to put all of your endpoints above this one, or they will not be called. */
 app.all("/*", (req, res) => {
   res.status(404).json({ error: `Endpoint not found: ${req.method} ${req.url}` });
 });
 
-app.listen(3001, () => console.log("Started"));
 module.exports = app;

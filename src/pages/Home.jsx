@@ -55,7 +55,7 @@ export default function Home() {
         {threads.length === 0 && <Typography variant="body1">No threads available.</Typography>}
         {
           threads.map((thread) => (
-            <Paper key={thread.id} elevation={3} sx={{ padding: 2, marginBottom: 2 }}
+            <Paper key={thread._id} elevation={3} sx={{ padding: 2, marginBottom: 2 }}
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',

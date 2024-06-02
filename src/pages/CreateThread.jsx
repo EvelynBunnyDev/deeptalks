@@ -3,11 +3,16 @@ import { Container, TextField, Button, AppBar, Tabs, Tab, Box, Typography } from
 import NavBar from './Header';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Auth from "../models/Auth.js";
 import { newThread } from "../models/Threads.js";
 
 function CreateThreadPage() {
   const [thread, setThread] = useState({ title: '', content: '' });
   const navigate = useNavigate();
+
+  React.useEffect(() => void (async () => {
+    await Auth.require(navigate);
+  })(), []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
