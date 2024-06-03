@@ -45,12 +45,18 @@ function CommentPage() {
         onChange={handleInputChange}
         margin="normal"
       />
-      <Button variant="contained" color="primary" disabled={!comment} onClick={handleSubmit}>
-        Post Comment
-      </Button>
-      <Button variant="outlined" component={RouterLink} to={`/thread/${threadId}`} sx={{ mt: 2 }}>
-        Cancel
-      </Button>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: '20px',
+      }}>
+        <Button variant="contained" color="primary" disabled={!comment} onClick={handleSubmit}>
+          Post Comment
+        </Button>
+        <Button variant="outlined" component={RouterLink} to={`/thread/${threadId}`} sx={{ mt: 2 }}>
+          Cancel
+        </Button>
+      </div>
     </Container>
   );
 }

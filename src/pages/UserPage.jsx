@@ -4,6 +4,7 @@ import { Card, CardContent, Typography, Avatar, Box, Container, Button } from '@
 import { USERS } from "../configs/users";
 import { useNavigate, useParams } from "react-router-dom";
 import { blue } from "@mui/material/colors";
+import NavBar from "./Header";
 
 export function UserPage() {
   const id = useParams().userId;
@@ -63,38 +64,41 @@ export function UserAvatar(props) {
 
   // profile photo with name
   return (
-    <div
-      onClick={() => { navigate('/profile/' + id) }}
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'pointer',
-        padding: '10px 50px 0',
-      }}
-    >
-      <img
-        src={user.profile_pic} alt="profile"
+    <>
+      <NavBar />
+      <div
+        onClick={() => { navigate('/profile/' + id) }}
         style={{
-          width: '80px',
-          height: '80px',
-          borderRadius: '50%',
-          marginBottom: '10px'
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          padding: '10px 50px 0',
         }}
+      >
+        <img
+          src={user.profile_pic} alt="profile"
+          style={{
+            width: '80px',
+            height: '80px',
+            borderRadius: '50%',
+            marginBottom: '10px'
+          }}
 
-      />
-      <Typography>{user.name}</Typography>
-      <Typography color="text.secondary" sx={{ mb: 2 }}>
-        {user.status}
-        {user.status === 'online' ? (
-          <span style={{ color: 'green', marginLeft: '10px' }}>●</span>
-        ) : (
-          <span style={{ color: 'red', marginLeft: '10px' }}>●</span>
-        )}
-      </Typography>
-    </div>
+        />
+        <Typography>{user.name}</Typography>
+        <Typography color="text.secondary" sx={{ mb: 2 }}>
+          {user.status}
+          {user.status === 'online' ? (
+            <span style={{ color: 'green', marginLeft: '10px' }}>●</span>
+          ) : (
+            <span style={{ color: 'red', marginLeft: '10px' }}>●</span>
+          )}
+        </Typography>
+      </div>
+    </>
   );
 }
 

@@ -7,6 +7,7 @@ import Link from "../components/Link";
 import Auth from "../models/Auth.js";
 import getThreads from "../models/Threads.js";
 import getUsers from "../models/Users.js";
+import CommentPage from "./CommentThread.jsx";
 
 export default function ThreadPage() {
   const { threadId } = useParams();
@@ -73,6 +74,10 @@ export default function ThreadPage() {
             );
           })}
         </Grid>
+        <Grid item>
+          
+        </Grid>
+
       </Grid>}
     </Container>
   );

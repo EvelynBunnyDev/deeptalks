@@ -42,7 +42,7 @@ export default function NavBar(props) {
   };
   const open = Boolean(anchorEl);
 
-  const navigateBack = () => { 
+  const navigateBack = () => {
     navigate(-1);
   }
 
@@ -91,53 +91,64 @@ export default function NavBar(props) {
               alignItems: "center",
               justifyContent: "flex-start",
               width: "20%"
-            
+
             }}>
-            <Button onClick={navigateBack} style={{ color: "black", padding: "5px 20px" }}>
-              <ArrowBackIcon />
-            </Button>
-              <Typography 
-                variant="h5" style={{ 
+              <Button onClick={navigateBack} style={{ color: "black", padding: "5px 20px" }}>
+                <ArrowBackIcon />
+              </Button>
+              <Typography
+                variant="h5" style={{
                   marginLeft: "25px", color: "#33363F", whiteSpace: "nowrap", cursor: "pointer"
                 }}
-                onClick={() => navigate("/")}  
+                onClick={() => navigate("/")}
               >
                 <b>{title}</b>
               </Typography>
             </div>
             <Grid container columnSpacing={2} justifyContent="flex-end" alignItems="center">
-            {/* <img src={logo} alt="Logo" style={{ height: '50px', marginRight: '20px' }} /> */}
+              {/* <img src={logo} alt="Logo" style={{ height: '50px', marginRight: '20px' }} /> */}
 
-              {currentUser ? <>
-                <Grid item>
-                  {createPostButton}
-                  <Link to="/journal" style={{ textDecoration: 'none' }}>
-                    <Button style={buttonStyle}>View Journal Entries</Button>
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <ButtonBase variant="contained" onClick={handleClick}>
-                    <AccountCircleRoundedIcon fontSize="large" sx={{ color: "#33363F" }} /> <ExpandMoreRoundedIcon fontSize="large" sx={{ color: "#33363F" }} />
-                  </ButtonBase>
-                  <Menu
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                  >
-
-                    <Link to="/profile"><MenuItem sx={{ color: "#33363F" }}>Account Settings</MenuItem></Link>
-                    <MenuItem sx={{ color: "darkred" }} onClick={handleLogout}>Logout</MenuItem>
-                  </Menu>
-                </Grid>
+              {currentUser ?
+                <>
+                  <Grid item style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                    {createPostButton}
+                    <Link to="/journal" style={{ textDecoration: 'none', display: 'block', margin: 'auto', width: 'fit-content' }}>
+                      <Button style={{ display: 'block' }}>View Journal Entries</Button>
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <ButtonBase variant="contained" onClick={handleClick}>
+                      <AccountCircleRoundedIcon fontSize="large" sx={{ color: "#33363F" }} /> <ExpandMoreRoundedIcon fontSize="large" sx={{ color: "#33363F" }} />
+                    </ButtonBase>
+                    <Menu
+                      open={open}
+                      anchorEl={anchorEl}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                    >
+                      <Link to="/profile"><MenuItem sx={{ color: "#33363F" }}>Account Settings</MenuItem></Link>
+                      <MenuItem sx={{ color: "darkred" }} onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
+                  </Grid>
                 </> : loading ? <>
                   <Typography>Loading...</Typography>
-                </> : <>
-                  <div ref={handleDiv}/>
-                </>}
+                </> : 
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '10px',
+                  }}
+                >
+                  <Link to="/journal" style={{ textDecoration: 'none', display: 'block', margin: 'auto', width: 'fit-content' }}>
+                    <Button style={{ display: 'block' }}>Journal Entries</Button>
+                  </Link>
+                  <div ref={handleDiv} />
+                </div>}
 
             </Grid>
           </Toolbar>
