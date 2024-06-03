@@ -8,7 +8,7 @@ function JournalPage() {
     id: 1,
     title: 'Reflections on Today',
     date: 'May 14, 2024',
-    content: 'Today was a productive day. I learned a lot about React.'
+    content: 'Today was a truly memorable and joyful day, marked by laughter and lively conversations as I celebrated another year of life surrounded by my closest friends. \nThe afternoon sun filtered through the leaves, casting dappled shadows on the grass where we gathered, a gentle breeze occasionally stirring the balloons and streamers that decorated the garden. As the day unfolded, each moment seemed to bring its own burst of happiness. Friends, who had come from near and far, brought with them not just thoughtful gifts, but the warmth of their presence, making the day feel all the more special. We shared stories and reminisced about past adventures, our laughter ringing out and blending with the sounds of the neighborhood around us. The conversation flowed effortlessly, touching on everything from trivial daily occurrences to deep, reflective discussions about our hopes and dreams. It felt as if with each topic we covered, we were weaving a richer tapestry of our collective experiences, drawing us closer together. \nThe highlight of the day was when we gathered around the table, faces lit by the soft glow of the candles on the cake. As I blew them out, making a silent wish, I felt a profound sense of gratitude for the wonderful people in my life. It was a simple moment, yet it felt like a snapshot of happiness, captured perfectly in the midst of laughter and the warm glances of friends.'
   });
   const [editableContent, setEditableContent] = useState(journal.content);
   const [editMode, setEditMode] = useState(false);
@@ -72,9 +72,8 @@ function JournalPage() {
   );  
 
   const handleSubmitFeedback = () => {
-    // handle form submission, e.g., updating state or posting to a backend
     console.log("Submitting feedback form...");
-    navigate('/journal');
+    navigate('/journal'); // Redirect to the journal page after submitting feedback. Need some testing
   };
 
   const renderFeedbackForm = () => (
@@ -157,7 +156,7 @@ function JournalPage() {
   </Typography>
   <Box sx={{ display: 'flex', justifyContent: 'space-evenly', mb: 2 }}>
     <Button variant="contained" color="primary" onClick={() => setMode('feedback')}>
-      Fill Feedback Form
+      Post-Call Feedback Form
     </Button>
     <Button variant="contained" color="error" onClick={handleNewJournal}>
       Add New Journal
