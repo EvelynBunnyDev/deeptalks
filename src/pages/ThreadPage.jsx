@@ -1,27 +1,36 @@
-import React from "react";
-import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
-import { Typography, Card, CardContent, Container, Grid, Button } from "@mui/material";  // Import Button from MUI
+import React, { useState } from "react";
+import { useParams, Link as RouterLink } from "react-router-dom";
+import { Typography, Card, CardContent, Container, Grid, Button, TextField } from "@mui/material";
 import NavBar from "./Header";
 import Link from "../components/Link";
 
 import Auth from "../models/Auth.js";
-import getThreads from "../models/Threads.js";
+import getThreads, { newComment } from "../models/Threads.js";
 import getUsers from "../models/Users.js";
-import CommentPage from "./CommentThread.jsx";
 
 export default function ThreadPage() {
   const { threadId } = useParams();
   const [thread, setThread] = React.useState(null);
   const [users, setUsers] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState(null);
-  const navigate = useNavigate();
+  const [comment, setComment] = useState('');
+
+  const handleInputChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    await newComment(threadId, { content: comment });
+    setComment('');  // Clear the comment input field after submission
+  };
 
   React.useEffect(() => void (async () => {
     const [user, users, threads] = await Promise.all([Auth.check(), getUsers(), getThreads()]);
-    setCurrentUser(user);
+    setCurrentUser
+    (user);
     setUsers(users);
     const thread = threads[threadId];
-    if (!thread) navigate("/");
+    if (!thread) return;
     setThread(thread);
   })(), []);
 
@@ -41,18 +50,7 @@ export default function ThreadPage() {
             <Typography variant="body1" paragraph>
               Author: <Link to={`/profile/${thread.author_id}`}>{users[thread.author_id].pseudonym}</Link>
             </Typography>
-            {/* Add Button to navigate to commenting page */}
-            {currentUser && <Button
-              component={RouterLink}
-              to={`/commenting/${threadId}`}
-              variant="contained"
-              color="primary"
-              sx={{ mb: 2 }}  // Style as needed
-            >
-              Comment
-            </Button>}
           </Grid>
-
         </Grid>
         <Grid item>
           <Typography variant="h4" component="h2">
@@ -73,11 +71,26 @@ export default function ThreadPage() {
               </Card>
             );
           })}
+          <TextField
+            label="Your Comment"
+            variant="outlined"
+            fullWidth
+            multiline
+            rows={4}
+            value={comment}
+            onChange={handleInputChange}
+            margin="normal"
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={!comment}
+            onClick={handleSubmit}
+            sx={{ mt: 2 }}
+          >
+            Post Comment
+          </Button>
         </Grid>
-        <Grid item>
-          
-        </Grid>
-
       </Grid>}
     </Container>
   );
