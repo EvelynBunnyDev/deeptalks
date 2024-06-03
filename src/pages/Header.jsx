@@ -10,6 +10,8 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import { useNavigate } from "react-router-dom";
 import Link from "../components/Link.js";
 //import logo from "./../logo.jpg";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 import Api from "../models/Api.js";
 import Auth from "../models/Auth.js";
@@ -27,7 +29,9 @@ let buttonStyle = {
 };
 
 export default function NavBar(props) {
-  const { title, post, type } = props;
+  const navigate = useNavigate();
+  let { title, post, type } = props;
+  title = title || "DeepTalks";
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,6 +41,10 @@ export default function NavBar(props) {
     setAnchorEl(null);
   };
   const open = Boolean(anchorEl);
+
+  const navigateBack = () => { 
+    navigate(-1);
+  }
 
   let createPostButton
   if (post === "true") {
@@ -55,7 +63,6 @@ export default function NavBar(props) {
     setLoading(false);
   })(), []);
 
-  const navigate = useNavigate();
   const handleDiv = (node) => {
     if (!node) return;
     Auth.render(node, (data) => {
@@ -79,9 +86,25 @@ export default function NavBar(props) {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" elevation={0}>
           <Toolbar style={barStyle}>
-            <Typography variant="h5" style={{ marginLeft: "25px", color: "#33363F", whiteSpace: "nowrap" }}>
-              <b>{title}</b>
-            </Typography>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              width: "20%"
+            
+            }}>
+            <Button onClick={navigateBack} style={{ color: "black", padding: "5px 20px" }}>
+              <ArrowBackIcon />
+            </Button>
+              <Typography 
+                variant="h5" style={{ 
+                  marginLeft: "25px", color: "#33363F", whiteSpace: "nowrap", cursor: "pointer"
+                }}
+                onClick={() => navigate("/")}  
+              >
+                <b>{title}</b>
+              </Typography>
+            </div>
             <Grid container columnSpacing={2} justifyContent="flex-end" alignItems="center">
             {/* <img src={logo} alt="Logo" style={{ height: '50px', marginRight: '20px' }} /> */}
 
