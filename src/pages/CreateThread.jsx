@@ -22,7 +22,6 @@ function CreateThreadPage() {
   const handleSubmit = async () => {
     const { _id } = await newThread(thread);
     navigate(`/thread/${_id}`);
-
   };
 
   return (

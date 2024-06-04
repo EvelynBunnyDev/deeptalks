@@ -11,6 +11,7 @@ import CommentingPage from "./pages/CommentThread.jsx";
 import JournalPage from "./pages/Journal.jsx";
 import ThreadPage from "./pages/ThreadPage.jsx";
 import { UserPage } from "./pages/UserPage.jsx";
+import { AddNewJournalPage, JournalListPage } from "./pages/JournalPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,10 @@ const router = createBrowserRouter([
     element: <CommentingPage />
   }, {
     path: "/journal",
-    element: <JournalPage />
+    element: <JournalListPage />
+  }, {
+    path: "/journal/new",
+    element: <AddNewJournalPage />
   } , {
     // page for each thread with id
     path: "/thread/:threadId",

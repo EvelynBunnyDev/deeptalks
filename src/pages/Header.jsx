@@ -109,10 +109,16 @@ export default function NavBar(props) {
               {/* <img src={logo} alt="Logo" style={{ height: '50px', marginRight: '20px' }} /> */}
 
               {currentUser ?
-                <>
-                  <Grid item style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                <Grid container
+                  direction="row"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  columnSpacing={2}
+                  rowSpacing={2}
+                >
+                  <Grid item style={{ display: 'flex', justifyContent: 'center', width: '300px' }}>
                     {createPostButton}
-                    <Link to="/journal" style={{ textDecoration: 'none', display: 'block', margin: 'auto', width: 'fit-content' }}>
+                    <Link to="/journal" style={{ textDecoration: 'none', display: 'block', margin: 'auto', width: 'auto' }}>
                       <Button style={{ display: 'block' }}>View Journal Entries</Button>
                     </Link>
                   </Grid>
@@ -133,7 +139,7 @@ export default function NavBar(props) {
                       <MenuItem sx={{ color: "darkred" }} onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                   </Grid>
-                </> : loading ? <>
+                </Grid> : loading ? <>
                   <Typography>Loading...</Typography>
                 </> : 
                 <div
