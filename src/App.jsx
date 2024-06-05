@@ -12,6 +12,8 @@ import JournalPage from "./pages/Journal.jsx";
 import ThreadPage from "./pages/ThreadPage.jsx";
 import { UserPage } from "./pages/UserPage.jsx";
 import { AddNewJournalPage, JournalListPage } from "./pages/JournalPage.jsx";
+import { UserStatusProvider } from "./contexts/userCallContext.jsx";
+import { IncomingCallWrapper } from "./pages/CallPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +50,11 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
+      <UserStatusProvider>
+        <IncomingCallWrapper>
+          <RouterProvider router={router} />
+        </IncomingCallWrapper>
+      </UserStatusProvider>
     </ThemeProvider>
   );
 };

@@ -5,10 +5,21 @@ import { USERS } from "../configs/users";
 import { useNavigate, useParams } from "react-router-dom";
 import { blue } from "@mui/material/colors";
 import NavBar from "./Header";
+import { useUserStatus } from "../contexts/userCallContext";
 
 export function UserPage() {
   const id = useParams().userId;
   const user = USERS[id];
+  const mainContext = useUserStatus();
+
+  const { initiateCallStatus, setInitiateCallStatus } = mainContext;
+
+  function handleInitiateCall() {
+    console.log('Initiating call...');
+    setInitiateCallStatus(1);
+
+    // @TODO: Implement the call initiation logic here for backend
+  }
 
   return (
     <Box
@@ -45,9 +56,15 @@ export function UserPage() {
               {user.email}
             </Typography>
             <Box sx={{ mt: 3 }}>
-              <Button variant="contained" color="primary">
-                Connect
-              </Button>
+              {initiateCallStatus === 0 ? (
+                <Button variant="contained" color="primary" onClick={handleInitiateCall}>
+                  Connect
+                </Button>) : (
+                <Button variant="contained" color="primary" disabled>
+                  Connecting...
+                </Button>
+              )
+              }
             </Box>
           </CardContent>
         </Card>
