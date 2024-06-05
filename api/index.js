@@ -176,11 +176,13 @@ api.get("/journal", requireAuth, async (req, res) => {
 });
 
 api.post("/journal", requireAuth, async (req, res) => {
-  const { content } = req.body;
+  const body = req.body;
   const ids = await Journals.find().sort({ _id: -1 }).limit(1).toArray();
-  const _id = (ids[0]?._id || 0) + 1;
-  await Journals.insertOne({ _id, author_id: res.locals.user._id, time: new Date(), content });
-  res.json({ success: true });
+  body._id = (ids[0]?._id || 0) + 1;
+  body.author_id = res.locals.user._id;
+  body.time = new Date();
+  await Journals.insertOne(body);
+  res.json({ _id: body._id });
 });
 
 /* Catch-all route to return a JSON error if endpoint not defined.
@@ -189,4 +191,5 @@ app.all("/*", (req, res) => {
   res.status(404).json({ error: `Endpoint not found: ${req.method} ${req.url}` });
 });
 
+//app.listen(3001, () => console.log("Started"));
 module.exports = app;
