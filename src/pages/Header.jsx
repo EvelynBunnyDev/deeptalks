@@ -31,7 +31,7 @@ let buttonStyle = {
 export default function NavBar(props) {
   const navigate = useNavigate();
   let { title, post, type } = props;
-  title = title || "DeepTalks";
+  title = title || "Home";
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
