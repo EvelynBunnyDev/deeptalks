@@ -42,7 +42,7 @@ async  function handleInitiateCall() {
         alert("This person also requested to chat with you! Join using the following zoom link: " + "todo backend for non-overlap");
       } else {
         // If no mutual invite, create/store new invite
-        const inviteResponse = await api.req('POST', '/invites', {
+        const inviteResponse = await Api.req('POST', '/invites', {
           message: 'Would you like to chat?',
           recipient: id, 
           topics: ['General']
