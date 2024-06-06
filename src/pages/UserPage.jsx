@@ -7,6 +7,11 @@ import { blue } from "@mui/material/colors";
 import NavBar from "./Header";
 import { useUserStatus } from "../contexts/userCallContext";
 
+import Api from "../models/Api.js";
+
+//list of zoom links for use (probably backend)
+//var zoomLinks = Array.of("https://stanford.zoom.us/j/91441772945?pwd=3fpTQrifETgGZInxsxgMLYjBobD7aX.1", "https://stanford.zoom.us/j/95765989080?pwd=AVmO4X3eVNbN3P638oWhzl7GF5aj0Z.1", "https://stanford.zoom.us/j/99865906156?pwd=RsZRyeTJdokNqooqN6ozJ7IsE8dfEK.1", "https://stanford.zoom.us/j/94177491497?pwd=vPNkV9ua0Ls8zS8e81cgQptAAQ1ctp.1"};
+
 export function UserPage() {
   const id = useParams().userId;
   const user = USERS[id];
@@ -14,11 +19,41 @@ export function UserPage() {
 
   const { initiateCallStatus, setInitiateCallStatus } = mainContext;
 
-  function handleInitiateCall() {
+async  function handleInitiateCall() {
     console.log('Initiating call...');
     setInitiateCallStatus(1);
 
-    // @TODO: Implement the call initiation logic here for backend
+    alert("Our team is currently fixing up voice chat functionality! please text DeepTalks member Gene S-H Kim who you'd like to chat with at (650) 660-5475 or email gene.sh.kim@stanford.edu so he can facilitate. Thanks for your patience!"); //if simulating
+
+
+
+//Back-end stores all call requests made when pressing the "connect" button.
+//Each time connect button is pressed, system checks if there is a mutual invite (i.e. person B clicks connect to person A. Mutual invite exists if person A had requested to connect with person B based on info in database)
+//If mutual invite exists, alert with new zoom link for person B. person A gets sent push notification with same zoom link.
+//If no mutual invite, just posts request to database and alerts user.
+
+    try {
+      // Check if there's a pending invite from this user
+      const response = await Api.req('GET', '/invites');
+      const invites = response.invites;
+      const mutualInvite = invites.find(invite => invite.sender_id === id);
+
+      if (mutualInvite) {
+        alert("This person also requested to chat with you! Join using the following zoom link: " + "todo backend for non-overlap");
+      } else {
+        // If no mutual invite, create/store new invite
+        const inviteResponse = await api.req('POST', '/invites', {
+          message: 'Would you like to chat?',
+          recipient: id, 
+          topics: ['General']
+        });
+
+          alert("Voice chat request sent! We'll send you a notification when the other person requests to connect.");
+ 
+      }
+    } catch (error) {
+      console.error('Error initiating call:', error);
+    }
   }
 
   return (
