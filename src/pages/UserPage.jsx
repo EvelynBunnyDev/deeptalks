@@ -1,25 +1,27 @@
 import React from "react";
 import { Card, CardContent, Typography, Avatar, Box, Container, Button } from '@mui/material';
 
-import { USERS } from "../configs/users";
 import { useNavigate, useParams } from "react-router-dom";
 import { blue } from "@mui/material/colors";
 import NavBar from "./Header";
 import { useUserStatus } from "../contexts/userCallContext";
 
 import Api from "../models/Api.js";
+import Auth from "../models/Auth.js";
+import getUsers from "../models/Users.js";
 
 //list of zoom links for use (probably backend)
 //var zoomLinks = Array.of("https://stanford.zoom.us/j/91441772945?pwd=3fpTQrifETgGZInxsxgMLYjBobD7aX.1", "https://stanford.zoom.us/j/95765989080?pwd=AVmO4X3eVNbN3P638oWhzl7GF5aj0Z.1", "https://stanford.zoom.us/j/99865906156?pwd=RsZRyeTJdokNqooqN6ozJ7IsE8dfEK.1", "https://stanford.zoom.us/j/94177491497?pwd=vPNkV9ua0Ls8zS8e81cgQptAAQ1ctp.1"};
 
 export function UserPage() {
   const id = useParams().userId;
-  const user = USERS[id];
+  const [user, setUser] = React.useState(null);
   const mainContext = useUserStatus();
+  const navigate = useNavigate();
 
   const { initiateCallStatus, setInitiateCallStatus } = mainContext;
 
-async  function handleInitiateCall() {
+  async function handleInitiateCall() {
     console.log('Initiating call...');
     setInitiateCallStatus(1);
 
@@ -56,6 +58,13 @@ async  function handleInitiateCall() {
     }
   }
 
+  React.useEffect(() => void (async () => {
+    const [cur, users] = await Promise.all([Auth.check(), getUsers()]);
+    const user = users[id ?? cur?._id];
+    if (!user) navigate("/");
+    setUser(user);
+  })(), [id]);
+
   return (
     <Box
       sx={{
@@ -67,28 +76,17 @@ async  function handleInitiateCall() {
         justifyContent: 'center',
       }}
     >
-      <Container component="main" maxWidth="sm">
+      {user && <Container component="main" maxWidth="sm">
         <Card sx={{ opacity: 0.9 }}>
           <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Avatar sx={{ width: 120, height: 120, mb: 2, bgcolor: blue[500] }} src="https://i.pravatar.cc/300">
               ES
             </Avatar>
             <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
-              {user.name}
-            </Typography>
-            <Typography color="text.secondary" sx={{ mb: 2 }}>
-              {user.status}
-              {user.status === 'online' ? (
-                <span style={{ color: 'green', marginLeft: '10px' }}>●</span>
-              ) : (
-                <span style={{ color: 'red', marginLeft: '10px' }}>●</span>
-              )}
+              {user.pseudonym}
             </Typography>
             <Typography variant="body1" align="center" sx={{ mb: 1 }}>
-              {user.description}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-              {user.email}
+              {user.bio}
             </Typography>
             <Box sx={{ mt: 3 }}>
               {initiateCallStatus === 0 ? (
@@ -103,14 +101,14 @@ async  function handleInitiateCall() {
             </Box>
           </CardContent>
         </Card>
-      </Container>
+      </Container>}
     </Box>
   );
 }
 
 export function UserAvatar(props) {
   const id = props.id;
-  const user = USERS[id];
+  const user = null; //TODO
 
   const navigate = useNavigate();
 
