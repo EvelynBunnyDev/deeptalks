@@ -35,7 +35,7 @@ export function UserPage() {
       <Container component="main" maxWidth="sm">
         <Card sx={{ opacity: 0.9 }}>
           <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Avatar sx={{ width: 120, height: 120, mb: 2, bgcolor: blue[500] }} src="https://i.pravatar.cc/300">
+            <Avatar sx={{ width: 120, height: 120, mb: 2, bgcolor: blue[500] }} src="https://avatar.iran.liara.run/public">
               ES
             </Avatar>
             <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
