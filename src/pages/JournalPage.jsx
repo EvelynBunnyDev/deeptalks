@@ -45,7 +45,7 @@ export function JournalListPage() {
               {journal.title}
             </Typography>
             <Typography color="textSecondary" gutterBottom>
-              {journal.time}
+              {new Date(journal.time).toLocaleString()}
             </Typography>
             <Typography>
               {journal.content}
@@ -59,7 +59,6 @@ export function JournalListPage() {
 
 
 export function AddNewJournalPage() {
-  const [journal, setJournal] = useState({});
   const [journalContent, setJounralContent] = useState('');
   const [journalTitle, setJournalTitle] = useState('');
   const navigate = useNavigate();
@@ -70,12 +69,9 @@ export function AddNewJournalPage() {
       return;
     }
 
-    let date = new Date().toISOString();
-    setJournal({ date: date, content: journalContent, title: journalTitle});
-    console.log('Saving journal:', date, journalTitle, journalContent);
-
+    const data = { content: journalContent, title: journalTitle };
     // save the journal to the server
-    newJournal(journal).then(() => {
+    newJournal(data).then(() => {
       navigate('/journal');
     });
   };
@@ -88,7 +84,7 @@ export function AddNewJournalPage() {
           <TextField
             fullWidth
             label="Title"
-            value={journal.title}
+            value={journalTitle}
             onChange={(e) => setJournalTitle(e.target.value)}
             variant="outlined"
             margin="normal"

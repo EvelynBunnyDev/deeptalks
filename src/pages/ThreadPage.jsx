@@ -19,12 +19,7 @@ export default function ThreadPage() {
     setComment(event.target.value);
   };
 
-  const handleSubmit = async () => {
-    await newComment(threadId, { content: comment });
-    setComment('');  // Clear the comment input field after submission
-  };
-
-  React.useEffect(() => void (async () => {
+  const reload = async () => {
     const [user, users, threads] = await Promise.all([Auth.check(), getUsers(), getThreads()]);
     setCurrentUser
     (user);
@@ -32,6 +27,16 @@ export default function ThreadPage() {
     const thread = threads[threadId];
     if (!thread) return;
     setThread(thread);
+  };
+
+  const handleSubmit = async () => {
+    await newComment(thread, { content: comment });
+    setComment('');  // Clear the comment input field after submission
+    await reload();
+  };
+
+  React.useEffect(() => void (async () => {
+    await reload();
   })(), []);
 
   return (
@@ -71,6 +76,7 @@ export default function ThreadPage() {
               </Card>
             );
           })}
+          {currentUser && <>
           <TextField
             label="Your Comment"
             variant="outlined"
@@ -90,6 +96,7 @@ export default function ThreadPage() {
           >
             Post Comment
           </Button>
+          </>}
         </Grid>
       </Grid>}
     </Container>

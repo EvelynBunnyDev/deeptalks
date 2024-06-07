@@ -1,25 +1,69 @@
 import React from "react";
 import { Card, CardContent, Typography, Avatar, Box, Container, Button } from '@mui/material';
 
-import { USERS } from "../configs/users";
 import { useNavigate, useParams } from "react-router-dom";
 import { blue } from "@mui/material/colors";
 import NavBar from "./Header";
 import { useUserStatus } from "../contexts/userCallContext";
 
+import Api from "../models/Api.js";
+import Auth from "../models/Auth.js";
+import getUsers from "../models/Users.js";
+
+//list of zoom links for use (probably backend)
+//var zoomLinks = Array.of("https://stanford.zoom.us/j/91441772945?pwd=3fpTQrifETgGZInxsxgMLYjBobD7aX.1", "https://stanford.zoom.us/j/95765989080?pwd=AVmO4X3eVNbN3P638oWhzl7GF5aj0Z.1", "https://stanford.zoom.us/j/99865906156?pwd=RsZRyeTJdokNqooqN6ozJ7IsE8dfEK.1", "https://stanford.zoom.us/j/94177491497?pwd=vPNkV9ua0Ls8zS8e81cgQptAAQ1ctp.1"};
+
 export function UserPage() {
   const id = useParams().userId;
-  const user = USERS[id];
+  const [user, setUser] = React.useState(null);
   const mainContext = useUserStatus();
+  const navigate = useNavigate();
 
   const { initiateCallStatus, setInitiateCallStatus } = mainContext;
 
-  function handleInitiateCall() {
+  async function handleInitiateCall() {
     console.log('Initiating call...');
     setInitiateCallStatus(1);
 
-    // @TODO: Implement the call initiation logic here for backend
+    alert("Our team is currently fixing up voice chat functionality! please text DeepTalks member Gene S-H Kim who you'd like to chat with at (650) 660-5475 or email gene.sh.kim@stanford.edu so he can facilitate. Thanks for your patience!"); //if simulating
+
+
+
+//Back-end stores all call requests made when pressing the "connect" button.
+//Each time connect button is pressed, system checks if there is a mutual invite (i.e. person B clicks connect to person A. Mutual invite exists if person A had requested to connect with person B based on info in database)
+//If mutual invite exists, alert with new zoom link for person B. person A gets sent push notification with same zoom link.
+//If no mutual invite, just posts request to database and alerts user.
+
+    try {
+      // Check if there's a pending invite from this user
+      const response = await Api.req('GET', '/invites');
+      const invites = response.invites;
+      const mutualInvite = invites.find(invite => invite.sender_id === id);
+
+      if (mutualInvite) {
+        alert("This person also requested to chat with you! Join using the following zoom link: " + "todo backend for non-overlap");
+      } else {
+        // If no mutual invite, create/store new invite
+        const inviteResponse = await Api.req('POST', '/invites', {
+          message: 'Would you like to chat?',
+          recipient: id, 
+          topics: ['General']
+        });
+
+          alert("Voice chat request sent! We'll send you a notification when the other person requests to connect.");
+ 
+      }
+    } catch (error) {
+      console.error('Error initiating call:', error);
+    }
   }
+
+  React.useEffect(() => void (async () => {
+    const [cur, users] = await Promise.all([Auth.check(), getUsers()]);
+    const user = users[id ?? cur?._id];
+    if (!user) navigate("/");
+    setUser(user);
+  })(), [id]);
 
   return (
     <Box
@@ -32,28 +76,17 @@ export function UserPage() {
         justifyContent: 'center',
       }}
     >
-      <Container component="main" maxWidth="sm">
+      {user && <Container component="main" maxWidth="sm">
         <Card sx={{ opacity: 0.9 }}>
           <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Avatar sx={{ width: 120, height: 120, mb: 2, bgcolor: blue[500] }} src="https://avatar.iran.liara.run/public">
               ES
             </Avatar>
             <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
-              {user.name}
-            </Typography>
-            <Typography color="text.secondary" sx={{ mb: 2 }}>
-              {user.status}
-              {user.status === 'online' ? (
-                <span style={{ color: 'green', marginLeft: '10px' }}>●</span>
-              ) : (
-                <span style={{ color: 'red', marginLeft: '10px' }}>●</span>
-              )}
+              {user.pseudonym}
             </Typography>
             <Typography variant="body1" align="center" sx={{ mb: 1 }}>
-              {user.description}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-              {user.email}
+              {user.bio}
             </Typography>
             <Box sx={{ mt: 3 }}>
               {initiateCallStatus === 0 ? (
@@ -68,14 +101,14 @@ export function UserPage() {
             </Box>
           </CardContent>
         </Card>
-      </Container>
+      </Container>}
     </Box>
   );
 }
 
 export function UserAvatar(props) {
   const id = props.id;
-  const user = USERS[id];
+  const user = null; //TODO
 
   const navigate = useNavigate();
 
