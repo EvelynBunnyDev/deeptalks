@@ -10,6 +10,7 @@ import ThreadPage from "./pages/ThreadPage.jsx";
 import { UserPage } from "./pages/UserPage.jsx";
 import { AddNewJournalPage, JournalListPage } from "./pages/JournalPage.jsx";
 import { IncomingCallWrapper } from "./pages/CallPage.jsx";
+import NormsPage from "./pages/NormsPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,10 @@ const router = createBrowserRouter([
   }, {
     path: "/journal",
     element: <JournalListPage />
-  }, {
+  }, { 
+    path: "/norms",
+    element: <NormsPage />
+}, {
     path: "/journal/new",
     element: <AddNewJournalPage />
   } , {
