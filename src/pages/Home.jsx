@@ -56,6 +56,9 @@ export default function Home() {
             </Paper>
           ))
         }
+
+      <Typography variant="h4">Want to speak with a moderator or provide feedback? Email deeptalks.stanford@gmail.com</Typography>
+
       </Box>}
     </Container>
   );

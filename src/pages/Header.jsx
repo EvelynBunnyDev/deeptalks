@@ -121,6 +121,9 @@ export default function NavBar(props) {
                     <Link to="/journal" style={{ textDecoration: 'none', display: 'block', margin: 'auto', width: 'auto' }}>
                       <Button style={{ display: 'block' }}>View Journal Entries</Button>
                     </Link>
+                    <Link to="/norms" style={{ textDecoration: 'none', display: 'block', margin: 'auto', width: 'auto' }}>
+                      <Button style={{ display: 'block' }}>Read Community Norms</Button>
+                    </Link>
                   </Grid>
                   <Grid item>
                     <ButtonBase variant="contained" onClick={handleClick}>
