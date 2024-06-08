@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, AppBar, Tabs, Tab, Box, Typography } from '@mui/material';
+import { Container, TextField, Button, Box } from '@mui/material';
 import NavBar from './Header';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ function CreateThreadPage() {
 
   React.useEffect(() => void (async () => {
     await Auth.require(navigate);
-  })(), []);
+  })(), [navigate]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

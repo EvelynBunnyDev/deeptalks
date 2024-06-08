@@ -69,7 +69,7 @@ export default function NavBar(props) {
       const { apiKey, email, user } = data;
       if (user) {
         Api.setKey(apiKey);
-        setCurrentUser(user);
+        window.location.reload();
       } else {
         navigate("/signup", { state: { apiKey, email } });
       }
@@ -121,6 +121,9 @@ export default function NavBar(props) {
                     <Link to="/journal" style={{ textDecoration: 'none', display: 'block', margin: 'auto', width: 'auto' }}>
                       <Button style={{ display: 'block' }}>View Journal Entries</Button>
                     </Link>
+                    <Link to="/norms" style={{ textDecoration: 'none', display: 'block', margin: 'auto', width: 'auto' }}>
+                      <Button style={{ display: 'block' }}>Read Community Norms</Button>
+                    </Link>
                   </Grid>
                   <Grid item>
                     <ButtonBase variant="contained" onClick={handleClick}>
@@ -150,9 +153,6 @@ export default function NavBar(props) {
                     gap: '10px',
                   }}
                 >
-                  <Link to="/journal" style={{ textDecoration: 'none', display: 'block', margin: 'auto', width: 'fit-content' }}>
-                    <Button style={{ display: 'block' }}>Journal Entries</Button>
-                  </Link>
                   <div ref={handleDiv} />
                 </div>}
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Button, Checkbox, FormControlLabel, TextField, Select, MenuItem, Box, FormControl, InputLabel, FormGroup, Link } from '@mui/material';
+import { Container, Typography, Button, Checkbox, FormControlLabel, TextField, Select, MenuItem, Box, FormControl, InputLabel, Link } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import QuizComponent from './Quiz';
 
