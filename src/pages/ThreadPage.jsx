@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, Link as RouterLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Typography, Card, CardContent, Container, Grid, Button, TextField } from "@mui/material";
 import NavBar from "./Header";
 import Link from "../components/Link";

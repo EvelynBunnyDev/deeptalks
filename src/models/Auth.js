@@ -11,24 +11,27 @@ class Auth {
       callback: this._onLogin.bind(this),
       hd: "stanford.edu"
     });
+    this._user = null;
   }
 
   async check() {
+    if (this._user) return this._user;
     if (!Api.key) return null;
     const user = await Api.req("GET", "/me");
+    this._user = user;
     return user;
   }
 
   async require(navigate) {
     const user = await this.check();
-    console.log("require", user);
-    if (user) return;
+    if (user) return user;
     navigate("/");
   }
 
   logout(user) {
     google.accounts.id.revoke(user.email);
     Api.setKey(null);
+    setTimeout(() => window.location.reload(), 250);
   }
 
   render(parent, onLogin) {

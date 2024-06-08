@@ -1,31 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, Button, Box, Paper, THEME_ID } from '@mui/material';
+import { Container, Typography, Button, Box, Paper } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from './Header';
 
 import Auth from "../models/Auth.js";
 import getThreads from "../models/Threads.js";
-import getUsers from "../models/Users.js";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          {children}
-        </Box>
-      )}
-    </div>
-  );
-}
 
 export default function Home() {
   const [loading, setLoading] = useState(true);

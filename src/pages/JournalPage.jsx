@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, TextField, Button, Box, Paper, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, AppBar, Toolbar } from '@mui/material';
+import { Container, Typography, TextField, Button, Box, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './Header';
 import getJournals, { newJournal } from '../models/Journal';
@@ -12,12 +12,11 @@ export function JournalListPage() {
 
   useEffect(() => void (async () => {
     await Auth.require(navigate);
-  })(), []);
+  })(), [navigate]);
 
   useEffect(() => {
     // fetch journals from the server
     getJournals().then((data) => {
-      console.log('Journals:', data.entries);
       setJournals(data.entries);
     });
   }, []);

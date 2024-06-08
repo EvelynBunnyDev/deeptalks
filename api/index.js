@@ -146,28 +146,49 @@ api.post("/threads/:id/comments", requireAuth, async (req, res) => {
 });
 
 api.get("/invites", requireAuth, async (req, res) => {
-  const invites = await Invites.find({ recipient_id: res.locals.user._id, status: "pending" }).toArray();
+  const all = await Invites.find().toArray();
+  const invites = [];
+  const id = res.locals.user._id;
+  for (const i of all) {
+    if (i.status !== "pending" && i.status !== "accept") continue;
+    if (i.sender_id === id) {
+      i.sender = res.locals.user.pseudonym;
+      i.recipient = (await Users.findOne({ _id: i.recipient_id }))?.pseudonym;
+    } else if (i.recipient_id === id) {
+      i.sender = (await Users.findOne({ _id: i.sender_id }))?.pseudonym;
+      i.recipient = res.locals.user.pseudonym;
+    } else continue;
+    invites.push(i);
+  }
   res.json({ invites });
 });
 
+const ZOOM_LINKS = [
+  "https://stanford.zoom.us/j/91441772945?pwd=3fpTQrifETgGZInxsxgMLYjBobD7aX.1",
+  "https://stanford.zoom.us/j/95765989080?pwd=AVmO4X3eVNbN3P638oWhzl7GF5aj0Z.1",
+  "https://stanford.zoom.us/j/99865906156?pwd=RsZRyeTJdokNqooqN6ozJ7IsE8dfEK.1",
+  "https://stanford.zoom.us/j/94177491497?pwd=vPNkV9ua0Ls8zS8e81cgQptAAQ1ctp.1"
+];
+
 api.post("/invites", requireAuth, async (req, res) => {
-  const { message, recipient, topics } = req.body;
+  const { message, recipient } = req.body;
   const r = await Users.findOne({ _id: recipient });
   if (!r) return res.status(404).json({ error: "Invalid recipient" });
   const ids = await Invites.find().sort({ _id: -1 }).limit(1).toArray();
   const _id = (ids[0]?._id || 0) + 1;
-  await Invites.insertOne({ _id, sender_id: res.locals.user._id, recipient_id: r._id, message, topics, status: "pending" });
-  res.json({ success: true });
+  const url = ZOOM_LINKS[_id % ZOOM_LINKS.length];
+  await Invites.insertOne({ _id, sender_id: res.locals.user._id, recipient_id: r._id, message, status: "pending", url });
+  res.json({ id: _id });
 });
 
 api.post("/invites/:id/:action", requireAuth, async (req, res) => {
   const { id, action } = req.params;
-  if (action !== "accept" && action !== "decline") return res.status(400).json({ error: "Invalid action" });
-  const i = await Invites.findOne({ _id: id }).toArray();
-  if (!i || i.recipient_id !== res.locals.user._id || i.status !== "pending") return res.status(400).json({ error: "Invalid invite" });
+  if (action !== "accept" && action !== "decline" && action !== "done") return res.status(400).json({ error: "Invalid action" });
+  const i = await Invites.findOne({ _id: Number(id) });
+  if (!i || (i.sender_id !== res.locals.user._id && i.recipient_id !== res.locals.user._id)) return res.status(400).json({ error: "Invalid invite" });
   i.status = action;
   await Invites.replaceOne({ _id: i._id }, i);
-  res.json({ success: true });
+  res.json({ url: i.url });
 });
 
 api.get("/journal", requireAuth, async (req, res) => {
