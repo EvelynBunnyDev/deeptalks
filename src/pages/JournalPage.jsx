@@ -29,9 +29,9 @@ export function JournalListPage() {
         Journal
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'space-evenly', mb: 2 }}>
-        <Button variant="contained" color="primary" onClick={() => { alert('Not implemented'); }}>
+        {/* <Button variant="contained" color="primary" onClick={() => { alert('Not implemented'); }}>
           Post-Call Feedback Form
-        </Button>
+        </Button> */}
         <Button variant="contained" color="error" onClick={() => { navigate("/journal/new"); }}>
           Add New Journal
         </Button>
